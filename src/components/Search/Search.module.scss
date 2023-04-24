@@ -1,0 +1,30 @@
+.search {
+	display: flex;
+	margin-left: 30px;
+	height: 40px;
+	background: #282b31;
+	border: #474c57 1px solid;
+	align-items: center;
+	border-radius: 20px;
+
+	>img {
+		height: 15px;
+		width: 15px;
+		margin-left: 10px;
+	}
+
+	input {
+		background: #fff;
+		height: 75%;
+		border-radius: 20px;
+		margin-left: 10px;
+		padding: 0px 8px;
+		font-size: 12px;
+		font-weight: 300;
+		color: #596273;
+
+		&::placeholder {
+			font-weight: 300;
+		}
+	}
+}
