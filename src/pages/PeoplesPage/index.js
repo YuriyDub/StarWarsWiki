@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { getApiResource } from "../../utils/network.js";
 import { API_PEOPLE } from "../../constants/api.js";
-import { getPeopleId, getPeopleImage } from "../../services/getPeopleData.js";
-import PeopleCard from "../../components/PeopleCard";
-import styles from "./PeoplePage.module.scss";
+import { getPeopleId, getPeopleImage } from "../../services/getData.js";
+import PeopleCard from "../../components/PeopleCard/index.js";
+import styles from "./PeoplesPage.module.scss";
 
 function PeoplePage() {
-  const [people, setPeople] = useState(null);
+  const [peoples, setPeoples] = useState(null);
 
   const getResource = async (url) => {
     const res = await getApiResource(url);
@@ -18,7 +18,7 @@ function PeoplePage() {
       return { id, name, img };
     });
 
-    setPeople(peopleList);
+    setPeoples(peopleList);
   };
 
   useEffect(() => {
@@ -27,8 +27,9 @@ function PeoplePage() {
 
   return (
     <div className={styles.page}>
+      <h1>PEOPLES</h1>
       <ul className={styles.cards}>
-        {people?.map(({ id, name, img }) => {
+        {peoples?.map(({ id, name, img }) => {
           return <PeopleCard key={id} name={name} img={img} />;
         })}
       </ul>

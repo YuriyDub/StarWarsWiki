@@ -2,10 +2,12 @@ import {
   URL_IMG_PERSON,
   HTTPS,
   SWAPI_ROOT,
-  SWAPI_PEOPLE,
+  SWAPI_PEOPLES,
   SWAPI_SHIPS,
+  SWAPI_PLANETS,
   GUIDE_IMG_EXTENTION,
-  URL_IMG_SHIPS,
+  URL_IMG_SHIP,
+  URL_IMG_PLANET,
 } from "../constants/api";
 
 const getId = (url, category) => {
@@ -13,7 +15,7 @@ const getId = (url, category) => {
   return id;
 };
 
-export const getPeopleId = (url) => getId(url, SWAPI_PEOPLE);
+export const getPeopleId = (url) => getId(url, SWAPI_PEOPLES);
 
 export const getPeopleImage = (id) =>
   `${URL_IMG_PERSON}/${id}${GUIDE_IMG_EXTENTION}`;
@@ -21,4 +23,9 @@ export const getPeopleImage = (id) =>
 export const getShipId = (url) => getId(url, SWAPI_SHIPS);
 
 export const getShipImage = (id) =>
-  `${URL_IMG_SHIPS}/${id}${GUIDE_IMG_EXTENTION}`;
+  `${URL_IMG_SHIP}/${id}${GUIDE_IMG_EXTENTION}`;
+
+export const getPlanetId = (url) => getId(url, SWAPI_PLANETS);
+
+export const getPlanetImage = (id) =>
+  `${URL_IMG_PLANET}/${id}${GUIDE_IMG_EXTENTION}`;

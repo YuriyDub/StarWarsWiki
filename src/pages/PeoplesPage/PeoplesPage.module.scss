@@ -1,0 +1,30 @@
+.page {
+	margin: 100px 80px;
+
+	h1 {
+		font-size: 24px;
+		font-weight: 800;
+		text-align: center;
+		margin-bottom: 80px;
+		background: linear-gradient(
+			90deg,
+			rgba(255, 255, 255, 0) 0%,
+			rgba(255, 255, 255, 0.05) 15%,
+			rgba(255, 255, 255, 0.1) 50%,
+			rgba(255, 255, 255, 0.05) 85%,
+			rgba(255, 255, 255, 0) 100%
+		);
+		padding: 10px 0px;
+		border-bottom: 1px solid #fff;
+		border-top: 1px solid #fff;
+	}
+
+	.cards {
+		display: flex;
+		gap: 20px;
+		flex-wrap: wrap;
+		margin-left: auto;
+		margin-right: auto;
+		width: 900px;
+	}
+}
