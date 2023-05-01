@@ -1,23 +1,24 @@
 .page {
-	margin: 100px 80px;
-
+	margin: 60px 80px;
+	background: #16171a;
+	border-radius: 30px;
+	padding: 40px 20px 80px 20px;
+	box-shadow: 0px 10px 30px #00000050 inset;
+	
 	h1 {
-		font-size: 24px;
-		font-weight: 800;
-		text-align: center;
-		margin-bottom: 80px;
-		background: linear-gradient(
-			90deg,
-			rgba(255, 255, 255, 0) 0%,
-			rgba(255, 255, 255, 0.05) 15%,
-			rgba(255, 255, 255, 0.1) 50%,
-			rgba(255, 255, 255, 0.05) 85%,
-			rgba(255, 255, 255, 0) 100%
-		);
+		margin-bottom: 20px;
 		padding: 10px 0px;
-		border-bottom: 1px solid #fff;
-		border-top: 1px solid #fff;
+		text-align: center;
+		color: #ffffff;
+		font-size: 56px;
+		font-weight: 800;
+		text-shadow: 0px 20px 30px #00000050;
+		border-bottom: #ffffff 1px solid;
+		margin-left: auto;
+		margin-right: auto;
+		width: 900px;
 	}
+
 	.cards {
 		display: flex;
 		gap: 20px;
@@ -25,5 +26,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		width: 900px;
+		border-bottom: #ffffff 1px solid;
+		padding-bottom: 20px;
 	}
 }
