@@ -8,15 +8,25 @@ body {
 	font-size: 14px;
 	font-weight: 500;
 	color: #fff;
+
+	background-image: url("../night-sky.svg");
+	background-size: 200px;
+	animation: scroll 30s linear infinite;
 }
 
 .wrapper {
 	background: linear-gradient(180deg, rgba(35, 37, 42, 1) 0%, rgba(42, 48, 65, 1) 100%);
-	box-shadow: 0px 10px 20px #000000a9;
+	box-shadow: 0px 10px 40px #000000;
 	border-radius: 20px;
 	max-width: 1240px;
 	min-width: 1080px;
 	min-height: 540px;
 	margin: 50px auto;
 	padding-bottom: 300px;
+}
+
+@keyframes scroll {
+	100% {
+		background-position: 0px 3000px;
+	}
 }

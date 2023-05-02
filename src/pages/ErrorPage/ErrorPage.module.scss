@@ -1,0 +1,15 @@
+.errorPage {
+	margin: 60px 80px;
+	background: #16171a;
+	border-radius: 30px;
+	box-shadow: 0px 10px 30px #000000cf inset;
+
+	img {
+		margin-left: 50%;
+		margin-right: 50%;
+		margin-top: 50%;
+		margin-bottom: 50%;
+		transform: translateX(-50%);
+		width: 96px;
+	}
+}

@@ -1,24 +1,30 @@
 import { useEffect, useState } from "react";
 import { getApiResource } from "../../utils/network.js";
+import { withErrorApi } from "../../hoc-helpers/withErrorApi.js";
 import { API_PEOPLE } from "../../constants/api.js";
 import { getPeopleId, getPeopleImage } from "../../services/getData.js";
 import PeopleCard from "../../components/PeopleCard/index.js";
 import styles from "./PeoplesPage.module.scss";
 
-function PeoplePage() {
+function PeoplePage(setErrorApi) {
   const [peoples, setPeoples] = useState(null);
 
   const getResource = async (url) => {
     const res = await getApiResource(url);
 
-    const peopleList = res.results.map(({ name, url }) => {
-      const id = getPeopleId(url);
-      const img = getPeopleImage(id);
+    if (res) {
+      const peopleList = res.results.map(({ name, url }) => {
+        const id = getPeopleId(url);
+        const img = getPeopleImage(id);
 
-      return { id, name, img };
-    });
+        return { id, name, img };
+      });
 
-    setPeoples(peopleList);
+      setPeoples(peopleList);
+      setErrorApi(false);
+    } else {
+      setErrorApi(true);
+    }
   };
 
   useEffect(() => {
@@ -37,4 +43,4 @@ function PeoplePage() {
   );
 }
 
-export default PeoplePage;
+export default withErrorApi(PeoplePage);
