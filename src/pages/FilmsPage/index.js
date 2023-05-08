@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { getApiResource } from "../../utils/network.js";
-import { API_FILMS } from "../../constants/api.js";
-import { getFilmId, getFilmImage } from "../../services/getData.js";
-import FilmCard from "../../components/FilmCard/index.js";
+
+import { getApiResource } from "@utils/network.js";
+import { withErrorApi } from "@hoc-helpers/withErrorApi.js";
+import { API_FILMS } from "@constants/api.js";
+import { getFilmId, getFilmImage } from "@services/getData.js";
+import FilmCard from "@components/FilmCard/index.js";
+
 import styles from "./FilmsPage.module.scss";
 
 function FilmsPage() {
@@ -37,4 +40,4 @@ function FilmsPage() {
   );
 }
 
-export default FilmsPage;
+export default withErrorApi(FilmsPage);

@@ -1,12 +1,12 @@
 import React from "react";
-import Header from "./components/Header";
 import { Routes, Route, Link } from "react-router-dom";
 
-import HomePage from "./pages/HomePage";
-import PeoplesPage from "./pages/PeoplesPage";
-import ShipsPage from "./pages/ShipsPage";
-import PlanetsPage from "./pages/PlanetsPage";
-import FilmsPage from "./pages/FilmsPage";
+import Header from "@components/Header";
+import HomePage from "@pages/HomePage";
+import PeoplesPage from "@pages/PeoplesPage";
+import ShipsPage from "@pages/ShipsPage";
+import PlanetsPage from "@pages/PlanetsPage";
+import FilmsPage from "@pages/FilmsPage";
 
 function App() {
   return (
