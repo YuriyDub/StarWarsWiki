@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 
 import { getApiResource } from "@utils/network.js";
 import { withErrorApi } from "@hoc-helpers/withErrorApi.js";
-import { API_PEOPLES } from "@constants/api.js";
-import { getPeopleImage } from "@services/getData.js";
+import { API_PLANETS } from "@constants/api.js";
+import { getPlanetImage } from "@services/getData.js";
 
 import PlaceHolder from "@components/PlaceHolder";
 
@@ -12,7 +12,7 @@ import styles from "./DetailedInfo.module.scss";
 
 function DetailedInfo() {
   const { id } = useParams();
-  const imgUrl = getPeopleImage(id);
+  const imgUrl = getPlanetImage(id);
 
   const [details, setDetails] = useState(null);
 
@@ -21,7 +21,7 @@ function DetailedInfo() {
   };
 
   useEffect(() => {
-    getResource(`${API_PEOPLES}/${id}/`);
+    getResource(`${API_PLANETS}/${id}/`);
   }, [id]);
 
   if (!details) {
@@ -31,18 +31,18 @@ function DetailedInfo() {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
-        <img src={imgUrl} alt="people" />
+        <img src={imgUrl} alt="planet" />
         <div className={styles.description}>
           <div>
             <h1>{details.name}</h1>
-            <h2>Birth Date: {details.birth_year}</h2>
+            <h2>Population: {details.population}</h2>
+            <h2>Climate: {details.climate}</h2>
+            <h2>Terrain: {details.terrain}</h2>
           </div>
           <div className={styles.parameters}>
-            <h2>Gender: {details.gender}</h2>
-            <h2>Height: {details.height}.sm</h2>
-            <h2>Mass: {details.mass}.kg</h2>
-            <h2>Skin Color: {details.skin_color}</h2>
-            <h2>Hair Color: {details.hair_color}</h2>
+            <h2>Diameter: {details.diameter}</h2>
+            <h2>Orbital Period: {details.orbital_period}</h2>
+            <h2>Rotation Period: {details.rotation_period}</h2>
           </div>
         </div>
       </div>

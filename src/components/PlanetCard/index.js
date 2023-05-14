@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./PlanetCard.module.scss";
 
-function PlanetCard({ img, name }) {
+function PlanetCard({ id, img, name }) {
   return (
     <li className={styles.card}>
-      <Link>
+      <Link to={"/planets/" + id}>
         <img
           src={img}
           alt={name}
