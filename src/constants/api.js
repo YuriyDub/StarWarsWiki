@@ -6,7 +6,7 @@ export const HTTP = "http://";
 export const SWAPI_ROOT = "swapi.dev/api/";
 
 export const SWAPI_PEOPLES = "people";
-export const API_PEOPLE = HTTPS + SWAPI_ROOT + SWAPI_PEOPLES;
+export const API_PEOPLES = HTTPS + SWAPI_ROOT + SWAPI_PEOPLES;
 
 export const SWAPI_SHIPS = "starships";
 export const API_SHIPS = HTTPS + SWAPI_ROOT + SWAPI_SHIPS;

@@ -1,8 +1,9 @@
-import styles from "./Header.module.scss";
-import NavButton from "../NavButton";
-import Search from "../Search";
-import Button from "../Button";
+import NavButton from "@components/NavButton";
+import Search from "@components/Search";
+import Button from "@components/Button";
 import { Link } from "react-router-dom";
+
+import styles from "./Header.module.scss";
 
 function Header() {
   return (
@@ -17,14 +18,14 @@ function Header() {
         </div>
       </Link>
       <div className={styles.navigation}>
-        <NavButton text="Peoples" href={"/people"} />
+        <NavButton text="Peoples" href={"/peoples"} />
         <NavButton text="Ships" href={"/ships"} />
         <NavButton text="Planets" href={"/planets"} />
         <NavButton text="Films" href={"/films"} />
       </div>
       <div className={styles.rightSide}>
         <Search placeholder={"Search..."} />
-        <Button imgUrl={"/img/icons/account.png"}/>
+        <Button imgUrl={"/img/icons/account.png"} />
       </div>
     </header>
   );
