@@ -2,6 +2,7 @@
 	margin-top: 300px;
 	margin-bottom: 300px;
 	display: flex;
+	width: 100%;
 	align-items: center;
 	justify-content: center;
 
@@ -11,8 +12,8 @@
 	}
 
 	img {
-		margin-left: 20px;
-		width: 36px;
+		margin-left: 10px;
+		width: 24px;
 		animation: rotate 2s infinite linear;
 	}
 

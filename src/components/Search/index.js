@@ -5,7 +5,7 @@ function Search({ placeholder }) {
   return (
     <div className={styles.search}>
       <img src="/img/icons/search.png" alt="Search" />
-      <input type="search" placeholder={placeholder}></input>
+      <input type="text" placeholder={placeholder}/>
       <Button text={"Sent"} />
     </div>
   );

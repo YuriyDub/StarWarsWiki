@@ -18,10 +18,10 @@ function Header() {
         </div>
       </Link>
       <div className={styles.navigation}>
-        <NavButton text="Peoples" href={"/peoples"} />
-        <NavButton text="Ships" href={"/ships"} />
-        <NavButton text="Planets" href={"/planets"} />
-        <NavButton text="Films" href={"/films"} />
+        <NavButton text="Peoples" href={"/peoples/?page=1"} />
+        <NavButton text="Ships" href={"/ships/?page=1"} />
+        <NavButton text="Planets" href={"/planets/?page=1"} />
+        <NavButton text="Films" href={"/films/?page=1"} />
       </div>
       <div className={styles.rightSide}>
         <Search placeholder={"Search..."} />
