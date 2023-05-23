@@ -1,26 +1,47 @@
-import styles from "./Search.module.scss";
 import { SWAPI_PARAM_SEARCH } from "../../constants/api";
 import { useSearchParams } from "react-router-dom";
+import { useDebounce } from "use-debounce";
+import Button from "@components/Button";
+
+import styles from "./Search.module.scss";
+import { memo, useEffect, useState } from "react";
 
 function Search({ placeholder }) {
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get(SWAPI_PARAM_SEARCH) ?? ""
+  );
+
+  const [debouncedSearchValue] = useDebounce(searchValue, 1000);
+
+  useEffect(() => {
+    if (searchParams.get(SWAPI_PARAM_SEARCH) === debouncedSearchValue) return;
+    setSearchParams({
+      page: 1,
+      search: debouncedSearchValue,
+    });
+  }, [setSearchParams, debouncedSearchValue]);
 
   return (
-    <div className={styles.search}>
+    <form className={styles.search}>
       <img src="/img/icons/search.png" alt="Search" />
       <input
         type="text"
         placeholder={placeholder}
-        value={searchParams.get(SWAPI_PARAM_SEARCH) ?? ""}
+        value={searchValue}
         onChange={(e) => {
-          setSearchParams({
-            page: 1,
-            search: e.currentTarget.value,
-          });
+          setSearchValue(e.currentTarget.value);
         }}
       />
-    </div>
+      <Button
+        text="🞩"
+        type="button"
+        onClick={() => {
+          setSearchValue("");
+        }}
+      />
+    </form>
   );
 }
 
-export default Search;
+export default memo(Search);

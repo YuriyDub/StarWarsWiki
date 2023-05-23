@@ -27,7 +27,7 @@ function List({ setErrorApi }) {
   const page = searchParams.get("page");
 
   const fetchFilms = useCallback(
-    async (search, page) => {
+    async (search, page, abortController) => {
       const url =
         API_FILMS +
         "?" +
@@ -36,7 +36,7 @@ function List({ setErrorApi }) {
           [SWAPI_PARAM_PAGE]: page,
         }).toString();
 
-      const res = await getApiResource(url);
+      const res = await getApiResource(url, abortController);
 
       const filmsList = res.results.map(({ title, url }) => {
         const id = getFilmId(url);
@@ -60,7 +60,9 @@ function List({ setErrorApi }) {
   );
 
   useEffect(() => {
-    fetchFilms(search, page);
+    const abortController = new AbortController();
+    fetchFilms(search, page, abortController);
+    return () => abortController.abort();
   }, [page, search, fetchFilms]);
 
   return (

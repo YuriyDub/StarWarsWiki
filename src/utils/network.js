@@ -1,6 +1,6 @@
-export const getApiResource = async (url) => {
+export const getApiResource = async (url, abortController) => {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { signal: abortController?.signal });
 
     if (!res.ok) {
       console.error("Couldn't fetch.", res.status);

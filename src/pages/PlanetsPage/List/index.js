@@ -24,7 +24,7 @@ function List({ setErrorApi }) {
   const page = searchParams.get("page");
 
   const fetchPlanets = useCallback(
-    async (search, page) => {
+    async (search, page, abortController) => {
       const url =
         API_PLANETS +
         "?" +
@@ -33,7 +33,7 @@ function List({ setErrorApi }) {
           [SWAPI_PARAM_PAGE]: page,
         }).toString();
 
-      const res = await getApiResource(url);
+      const res = await getApiResource(url, abortController);
 
       const planetsList = res.results.map(({ name, url }) => {
         const id = getPlanetId(url);
@@ -57,12 +57,10 @@ function List({ setErrorApi }) {
   );
 
   useEffect(() => {
+    const abortController = new AbortController();
     fetchPlanets(search, page);
+    return () => abortController.abort();
   }, [page, search, fetchPlanets]);
-
-  if (!planets) {
-    return <PlaceHolder />;
-  }
 
   return (
     <div className={styles.page}>

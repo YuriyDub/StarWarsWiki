@@ -42,7 +42,7 @@ header {
 		display: flex;
 		height: 100%;
 
-		:last-child {
+		> :last-child {
 			border-right: 1px solid #474c57;
 		}
 	}

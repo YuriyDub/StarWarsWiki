@@ -24,7 +24,7 @@ function ShipsPage({ setErrorApi }) {
   const page = searchParams.get("page");
 
   const fetchShips = useCallback(
-    async (search, page) => {
+    async (search, page, abortController) => {
       const url =
         API_SHIPS +
         "?" +
@@ -33,7 +33,7 @@ function ShipsPage({ setErrorApi }) {
           [SWAPI_PARAM_PAGE]: page,
         }).toString();
 
-      const res = await getApiResource(url);
+      const res = await getApiResource(url, abortController);
 
       const shipsList = res.results.map(({ name, url }) => {
         const id = getShipId(url);
@@ -57,7 +57,9 @@ function ShipsPage({ setErrorApi }) {
   );
 
   useEffect(() => {
+    const abortController = new AbortController();
     fetchShips(search, page);
+    return () => abortController.abort();
   }, [page, search, fetchShips]);
 
   return (

@@ -27,7 +27,7 @@ function List({ setErrorApi }) {
   const page = searchParams.get("page");
 
   const fetchPeoples = useCallback(
-    async (search, page) => {
+    async (search, page, abortController) => {
       const url =
         API_PEOPLES +
         "?" +
@@ -36,7 +36,9 @@ function List({ setErrorApi }) {
           [SWAPI_PARAM_PAGE]: page,
         }).toString();
 
-      const res = await getApiResource(url);
+      const res = await getApiResource(url, abortController);
+
+      if (!res) return;
 
       const peoplesList = res.results.map(({ name, url }) => {
         const id = getPeopleId(url);
@@ -60,7 +62,9 @@ function List({ setErrorApi }) {
   );
 
   useEffect(() => {
-    fetchPeoples(search, page);
+    const abortController = new AbortController();
+    fetchPeoples(search, page, abortController);
+    return () => abortController.abort();
   }, [page, search, fetchPeoples]);
 
   return (
