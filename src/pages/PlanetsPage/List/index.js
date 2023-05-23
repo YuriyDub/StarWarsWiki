@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useQueryParams } from "@hooks/useQueryParams";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { getApiResource } from "@utils/network.js";
 import { withErrorApi } from "@hoc-helpers/withErrorApi.js";
@@ -11,36 +11,54 @@ import PagesNavigation from "@components/PagesNavigation";
 import PlaceHolder from "@components/PlaceHolder";
 
 import styles from "./List.module.scss";
+import { SWAPI_PARAM_SEARCH } from "../../../constants/api";
+import Search from "../../../components/Search";
 
-function List() {
+function List({ setErrorApi }) {
   const [planets, setPlanets] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
-  const [counterPage, setCounterPage] = useState(0);
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") ?? "";
 
-  const query = useQueryParams();
-  const queryPage = query.get("page");
+  const page = searchParams.get("page");
 
-  const getResource = async (url) => {
-    const res = await getApiResource(url);
+  const fetchPlanets = useCallback(
+    async (search, page) => {
+      const url =
+        API_PLANETS +
+        "?" +
+        new URLSearchParams({
+          [SWAPI_PARAM_SEARCH]: search,
+          [SWAPI_PARAM_PAGE]: page,
+        }).toString();
 
-    const planetsList = res.results.map(({ name, url }) => {
-      const id = getPlanetId(url);
-      const img = getPlanetImage(id);
+      const res = await getApiResource(url);
 
-      return { id, name, img };
-    });
+      const planetsList = res.results.map(({ name, url }) => {
+        const id = getPlanetId(url);
+        const img = getPlanetImage(id);
 
-    setPrevPage(res.previous);
-    setNextPage(res.next);
-    setCounterPage(getPageId(url));
+        return { id, name, img };
+      });
 
-    setPlanets(planetsList);
-  };
+      setPrevPage(res.previous);
+      setNextPage(res.next);
+
+      setPlanets(planetsList);
+
+      if (res) {
+        setErrorApi(false);
+      } else {
+        setErrorApi(true);
+      }
+    },
+    [setErrorApi]
+  );
 
   useEffect(() => {
-    getResource(API_PLANETS + SWAPI_PARAM_PAGE + queryPage);
-  }, [queryPage]);
+    fetchPlanets(search, page);
+  }, [page, search, fetchPlanets]);
 
   if (!planets) {
     return <PlaceHolder />;
@@ -49,21 +67,23 @@ function List() {
   return (
     <div className={styles.page}>
       <h1>PLANETS</h1>
+      <div className={styles.search}>
+        <Search placeholder={"Search..."} />
+      </div>
       <ul className={styles.cards}>
         {planets ? (
-          planets.map(({ id, name, img }) => {
-            return <PlanetCard key={id} id={id} name={name} img={img} />;
-          })
+          planets.length ? (
+            planets.map(({ id, name, img }) => {
+              return <PlanetCard key={id} id={id} name={name} img={img} />;
+            })
+          ) : (
+            <>NO RESULTS</>
+          )
         ) : (
           <PlaceHolder />
         )}
       </ul>
-      <PagesNavigation
-        category="planets"
-        prevPage={prevPage}
-        nextPage={nextPage}
-        counter={counterPage}
-      />
+      <PagesNavigation prevPage={prevPage} nextPage={nextPage} />
     </div>
   );
 }

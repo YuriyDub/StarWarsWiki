@@ -24,7 +24,6 @@ function Header() {
         <NavButton text="Films" href={"/films/?page=1"} />
       </div>
       <div className={styles.rightSide}>
-        <Search placeholder={"Search..."} />
         <Button imgUrl={"/img/icons/account.png"} />
       </div>
     </header>

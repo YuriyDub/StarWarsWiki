@@ -1,65 +1,85 @@
-import { useEffect, useState } from "react";
-import { useQueryParams } from "@hooks/useQueryParams";
+import { useCallback, useEffect, useState } from "react";
 
 import { getApiResource } from "@utils/network.js";
 import { withErrorApi } from "@hoc-helpers/withErrorApi.js";
 import { API_SHIPS, SWAPI_PARAM_PAGE } from "@constants/api.js";
-import { getShipId, getShipImage, getPageId } from "@services/getData.js";
+import { getShipId, getShipImage } from "@services/getData.js";
 import ShipCard from "@components/ShipCard";
 import PagesNavigation from "@components/PagesNavigation";
 
 import PlaceHolder from "@components/PlaceHolder";
 
 import styles from "./List.module.scss";
+import { SWAPI_PARAM_SEARCH } from "../../../constants/api";
+import { useSearchParams } from "react-router-dom";
+import Search from "../../../components/Search";
 
-function ShipsPage() {
+function ShipsPage({ setErrorApi }) {
   const [ships, setShips] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
-  const [counterPage, setCounterPage] = useState(0);
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") ?? "";
 
-  const query = useQueryParams();
-  const queryPage = query.get("page");
+  const page = searchParams.get("page");
 
-  const getResource = async (url) => {
-    const res = await getApiResource(url);
+  const fetchShips = useCallback(
+    async (search, page) => {
+      const url =
+        API_SHIPS +
+        "?" +
+        new URLSearchParams({
+          [SWAPI_PARAM_SEARCH]: search,
+          [SWAPI_PARAM_PAGE]: page,
+        }).toString();
 
-    const peopleList = res.results.map(({ name, url }) => {
-      const id = getShipId(url);
-      const img = getShipImage(id);
+      const res = await getApiResource(url);
 
-      return { id, name, img };
-    });
+      const shipsList = res.results.map(({ name, url }) => {
+        const id = getShipId(url);
+        const img = getShipImage(id);
 
-    setPrevPage(res.previous);
-    setNextPage(res.next);
-    setCounterPage(getPageId(url));
+        return { id, name, img };
+      });
 
-    setShips(peopleList);
-  };
+      setPrevPage(res.previous);
+      setNextPage(res.next);
+
+      setShips(shipsList);
+
+      if (res) {
+        setErrorApi(false);
+      } else {
+        setErrorApi(true);
+      }
+    },
+    [setErrorApi]
+  );
 
   useEffect(() => {
-    getResource(API_SHIPS + SWAPI_PARAM_PAGE + queryPage);
-  }, [queryPage]);
+    fetchShips(search, page);
+  }, [page, search, fetchShips]);
 
   return (
     <div className={styles.page}>
       <h1>SHIPS</h1>
+      <div className={styles.search}>
+        <Search placeholder={"Search..."} />
+      </div>
       <ul className={styles.cards}>
         {ships ? (
-          ships.map(({ id, name, img }) => {
-            return <ShipCard id={id} key={id} name={name} img={img} />;
-          })
+          ships.length ? (
+            ships.map(({ id, name, img }) => {
+              return <ShipCard key={id} id={id} name={name} img={img} />;
+            })
+          ) : (
+            <>NO RESULTS</>
+          )
         ) : (
           <PlaceHolder />
         )}
       </ul>
-      <PagesNavigation
-        category="ships"
-        prevPage={prevPage}
-        nextPage={nextPage}
-        counter={counterPage}
-      />
+      <PagesNavigation prevPage={prevPage} nextPage={nextPage} />
     </div>
   );
 }

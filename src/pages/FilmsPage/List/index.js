@@ -1,65 +1,88 @@
-import { useEffect, useState } from "react";
-import { useQueryParams } from "@hooks/useQueryParams";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { getApiResource } from "@utils/network.js";
 import { withErrorApi } from "@hoc-helpers/withErrorApi.js";
-import { API_FILMS, SWAPI_PARAM_PAGE } from "@constants/api.js";
-import { getFilmId, getFilmImage, getPageId } from "@services/getData.js";
+import {
+  API_FILMS,
+  SWAPI_PARAM_PAGE,
+  SWAPI_PARAM_SEARCH,
+} from "@constants/api.js";
+import { getFilmId, getFilmImage } from "@services/getData.js";
 import FilmCard from "@components/FilmCard/index.js";
 import PagesNavigation from "@components/PagesNavigation";
 
 import PlaceHolder from "@components/PlaceHolder";
 
 import styles from "./List.module.scss";
+import Search from "../../../components/Search";
 
-function List() {
+function List({ setErrorApi }) {
   const [films, setFilms] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
-  const [counterPage, setCounterPage] = useState(0);
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") ?? "";
 
-  const query = useQueryParams();
-  const queryPage = query.get("page");
+  const page = searchParams.get("page");
 
-  const getResource = async (url) => {
-    const res = await getApiResource(url);
+  const fetchFilms = useCallback(
+    async (search, page) => {
+      const url =
+        API_FILMS +
+        "?" +
+        new URLSearchParams({
+          [SWAPI_PARAM_SEARCH]: search,
+          [SWAPI_PARAM_PAGE]: page,
+        }).toString();
 
-    const filmsList = res.results.map(({ title, url }) => {
-      const id = getFilmId(url);
-      const img = getFilmImage(id);
+      const res = await getApiResource(url);
 
-      return { id, title, img };
-    });
+      const filmsList = res.results.map(({ title, url }) => {
+        const id = getFilmId(url);
+        const img = getFilmImage(id);
 
-    setPrevPage(res.previous);
-    setNextPage(res.next);
-    setCounterPage(getPageId(url));
+        return { id, title, img };
+      });
 
-    setFilms(filmsList);
-  };
+      setPrevPage(res.previous);
+      setNextPage(res.next);
+
+      setFilms(filmsList);
+
+      if (res) {
+        setErrorApi(false);
+      } else {
+        setErrorApi(true);
+      }
+    },
+    [setErrorApi]
+  );
 
   useEffect(() => {
-    getResource(API_FILMS + SWAPI_PARAM_PAGE + queryPage);
-  }, []);
+    fetchFilms(search, page);
+  }, [page, search, fetchFilms]);
 
   return (
     <div className={styles.page}>
       <h1>FILMS</h1>
+      <div className={styles.search}>
+        <Search placeholder={"Search..."} />
+      </div>
       <ul className={styles.cards}>
         {films ? (
-          films.map(({ id, title, img }) => {
-            return <FilmCard key={id} id={id} title={title} img={img} />;
-          })
+          films.length ? (
+            films.map(({ id, title, img }) => {
+              return <FilmCard key={id} id={id} title={title} img={img} />;
+            })
+          ) : (
+            <>NO RESULTS</>
+          )
         ) : (
           <PlaceHolder />
         )}
       </ul>
-      <PagesNavigation
-        category="films"
-        prevPage={prevPage}
-        nextPage={nextPage}
-        counter={counterPage}
-      />
+      <PagesNavigation prevPage={prevPage} nextPage={nextPage} />
     </div>
   );
 }

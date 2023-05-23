@@ -4,7 +4,8 @@ export const HTTP = "http://";
 
 //swapi
 export const SWAPI_ROOT = "swapi.dev/api/";
-export const SWAPI_PARAM_PAGE = "/?page=";
+export const SWAPI_PARAM_PAGE = "page";
+export const SWAPI_PARAM_SEARCH = "search";
 
 export const SWAPI_PEOPLES = "people";
 export const API_PEOPLES = HTTPS + SWAPI_ROOT + SWAPI_PEOPLES;

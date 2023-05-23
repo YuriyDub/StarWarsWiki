@@ -1,27 +1,29 @@
 .search {
 	display: flex;
-	margin-left: 30px;
 	height: 40px;
+	width: 100%;
 	background: #282b31;
-	border: #474c57 1px solid;
 	align-items: center;
 	border-radius: 20px;
+	box-shadow: 0px 10px 30px #000000;
 
-	>img {
+	> img {
 		height: 15px;
 		width: 15px;
 		margin-left: 10px;
 	}
 
 	input {
-		background: #fff;
+		background: #16171a;
 		height: 75%;
 		border-radius: 20px;
 		margin-left: 10px;
+		margin-right: 5px;
 		padding: 0px 8px;
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: 300;
-		color: #596273;
+		color: #ffffff;
+		width: 100%;
 
 		&::placeholder {
 			font-weight: 300;

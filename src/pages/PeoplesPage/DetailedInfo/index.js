@@ -10,14 +10,21 @@ import PlaceHolder from "@components/PlaceHolder";
 
 import styles from "./DetailedInfo.module.scss";
 
-function DetailedInfo() {
+function DetailedInfo({ setErrorApi }) {
   const { id } = useParams();
   const imgUrl = getPeopleImage(id);
 
   const [details, setDetails] = useState(null);
 
   const getResource = async (url) => {
-    setDetails(await getApiResource(url));
+    const res = await getApiResource(url);
+
+    if (res) {
+      setErrorApi(false);
+    } else {
+      setErrorApi(true);
+    }
+    setDetails(res);
   };
 
   useEffect(() => {

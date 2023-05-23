@@ -1,29 +1,35 @@
 import Button from "@components/Button";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { SWAPI_PARAM_SEARCH, SWAPI_PARAM_PAGE } from "../../constants/api";
 
 import styles from "./PagesNavigation.module.scss";
 
-function PagesNavigation({ category, prevPage, nextPage, counter }) {
+function PagesNavigation({ prevPage, nextPage }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <div className={styles.pageNavigation}>
-      <Link
-        to={
-          prevPage
-            ? `/${category}/?page=${Number(counter) - 1}`
-            : `/${category}/?page=${Number(counter)}`
-        }
-      >
-        <Button text="previous" disabled={!prevPage} />
-      </Link>
-      <Link
-        to={
-          nextPage
-            ? `/${category}/?page=${Number(counter) + 1}`
-            : `/${category}/?page=${Number(counter)}`
-        }
-      >
-        <Button text="next" disabled={!nextPage} />
-      </Link>
+      <Button
+        text="previous"
+        disabled={!prevPage}
+        onClick={() => {
+          setSearchParams({
+            search: searchParams.get(SWAPI_PARAM_SEARCH) ?? "",
+            page: parseInt(searchParams.get(SWAPI_PARAM_PAGE)) - 1,
+          });
+        }}
+      />
+
+      <Button
+        text="next"
+        disabled={!nextPage}
+        onClick={() => {
+          setSearchParams({
+            search: searchParams.get(SWAPI_PARAM_SEARCH) ?? "",
+            page: parseInt(searchParams.get(SWAPI_PARAM_PAGE)) + 1,
+          });
+        }}
+      />
     </div>
   );
 }
