@@ -24,7 +24,7 @@ function Search({ placeholder }) {
 
   return (
     <form className={styles.search}>
-      <img src="/img/icons/search.png" alt="Search" />
+      <img src="./img/icons/search.png" alt="Search" />
       <input
         type="text"
         placeholder={placeholder}

@@ -9,7 +9,7 @@ function Header() {
   return (
     <header>
       <Link to="/" className={styles.logo}>
-        <img src="/img/death-star.png" alt="Logo" />
+        <img src="./img/death-star.png" alt="Logo" />
         <div className={styles.text}>
           <h3>
             <b>STARWARS</b>.Wiki
@@ -24,7 +24,7 @@ function Header() {
         <NavButton text="Films" href={"/films/?page=1"} />
       </div>
       <div className={styles.rightSide}>
-        <Button imgUrl={"/img/icons/account.png"} />
+        <Button imgUrl={"./img/icons/account.png"} />
       </div>
     </header>
   );
