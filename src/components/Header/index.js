@@ -7,9 +7,9 @@ import styles from "./Header.module.scss";
 
 function Header() {
   return (
-    <header>
+    <header></header>
       <Link to="/" className={styles.logo}>
-        <img src="./img/death-star.png" alt="Logo" />
+        <img src="./img/icons/death-star.png" alt="Logo" />
         <div className={styles.text}>
           <h3>
             <b>STARWARS</b>.Wiki
