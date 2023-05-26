@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/StarWarsWiki/static/css/main.68057b36.css",
+    "main.js": "/StarWarsWiki/static/js/main.59989da8.js",
+    "static/media/night-sky.svg": "/StarWarsWiki/static/media/night-sky.38c4b9b1082e34b51d64.svg",
+    "index.html": "/StarWarsWiki/index.html",
+    "main.68057b36.css.map": "/StarWarsWiki/static/css/main.68057b36.css.map",
+    "main.59989da8.js.map": "/StarWarsWiki/static/js/main.59989da8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.68057b36.css",
+    "static/js/main.59989da8.js"
+  ]
+}
