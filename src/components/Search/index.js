@@ -2,6 +2,7 @@ import { SWAPI_PARAM_SEARCH } from "../../constants/api";
 import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "use-debounce";
 import Button from "@components/Button";
+import searchImage from "@icons/search.png";
 
 import styles from "./Search.module.scss";
 import { memo, useEffect, useState } from "react";
@@ -24,7 +25,7 @@ function Search({ placeholder }) {
 
   return (
     <form className={styles.search}>
-      <img src="./img/icons/search.png" alt="Search" />
+      <img src={searchImage} alt="Search" />
       <input
         type="text"
         placeholder={placeholder}

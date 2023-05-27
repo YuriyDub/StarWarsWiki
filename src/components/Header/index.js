@@ -2,6 +2,8 @@ import NavButton from "@components/NavButton";
 import Search from "@components/Search";
 import Button from "@components/Button";
 import { Link } from "react-router-dom";
+import logo from "@icons/death-star.png";
+import accoutImage from "@icons/account.png";
 
 import styles from "./Header.module.scss";
 
@@ -9,7 +11,7 @@ function Header() {
   return (
     <header>
       <Link to="/" className={styles.logo}>
-        <img src="./img/icons/death-star.png" alt="Logo" />
+        <img src={logo} alt="Logo" />
         <div className={styles.text}>
           <h3>
             <b>STARWARS</b>.Wiki
@@ -24,7 +26,7 @@ function Header() {
         <NavButton text="Films" href={"/films/?page=1"} />
       </div>
       <div className={styles.rightSide}>
-        <Button imgUrl={"./img/icons/account.png"} />
+        <Button imgUrl={accoutImage} />
       </div>
     </header>
   );

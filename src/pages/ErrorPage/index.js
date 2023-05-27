@@ -1,9 +1,10 @@
 import styles from "./ErrorPage.module.scss";
+import errorImage from "@icons/error-404.png";
 
 function ErrorPage() {
   return (
     <div className={styles.errorPage}>
-      <img src="/img/icons/error-404.png" alt="NetworkError" />
+      <img src={errorImage} alt="NetworkError" />
     </div>
   );
 }
